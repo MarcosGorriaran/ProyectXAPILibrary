@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿
 
 namespace ProyectXAPI.Models
 {
