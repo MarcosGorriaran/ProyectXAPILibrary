@@ -1,11 +1,12 @@
 ﻿
 
+using System.Text;
 using System.Text.Json;
 using ProyectXAPI.Models.DTO;
 
 namespace ProyectXAPILibrary.Controller
 {
-    public class Controller
+    public abstract class Controller
     {
         protected HttpClient client { get; private set; }
         protected JsonSerializerOptions serializerOptions = new JsonSerializerOptions
@@ -24,6 +25,19 @@ namespace ProyectXAPILibrary.Controller
         {
             string responseDTO = await responseContent.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<ResponseDTO<TValue>>(responseDTO, serializerOptions);
+        }
+        protected async Task<HttpResponseMessage> SendRequest(HttpRequestMessage requestMessage,object bodyContent)
+        {
+            requestMessage.Content = new StringContent(JsonSerializer.Serialize(bodyContent, serializerOptions), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await this.client.SendAsync(requestMessage);
+            response.EnsureSuccessStatusCode();
+            return response;
+        }
+        protected async Task<HttpResponseMessage> SendRequest(HttpRequestMessage request)
+        {
+            HttpResponseMessage response = await this.client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            return response;
         }
         protected ResponseDTO<T> DeserializeResponse<T>(HttpResponseMessage responseContent)
         {
