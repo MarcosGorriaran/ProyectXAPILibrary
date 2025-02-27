@@ -10,7 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ProyectXAPILibrary.Controller
 {
-    public class SessionController : Controller, IReadAsync<Session>, IReadListAsync<Session>,ICreateAsync<Session>
+    public class SessionController : Controller, IReadAsync<Session>, IReadListAsync<Session>
     {
         const string SessionIDName = "sessionId=";
 
@@ -33,12 +33,12 @@ namespace ProyectXAPILibrary.Controller
 
             return DeserializeResponse<Session>(response);
         }
-        public async Task<ResponseDTO<object>> CreateAsync(Session addedSession)
+        public async Task<ResponseDTO<Session>> CreateAsync(Session addedSession)
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, AddSessionPath);
             HttpResponseMessage response = await SendRequest(request, addedSession);
 
-            return DeserializeResponse<object>(response);
+            return DeserializeResponse<Session>(response);
         }
     }
 }

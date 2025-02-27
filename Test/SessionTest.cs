@@ -55,7 +55,7 @@ namespace ProyectXAPILibrary.Test
             {
                 BaseAddress = new Uri(APIURL)
             });
-            ResponseDTO<object> response = controller.CreateAsync(session).GetAwaiter().GetResult();
+            ResponseDTO<Session> response = controller.CreateAsync(session).GetAwaiter().GetResult();
 
             return JsonSerializer.Serialize(response, new JsonSerializerOptions()
             {
